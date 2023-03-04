@@ -1,0 +1,37 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('git version') {
+            steps {
+                sh 'git --version'
+            }
+        }
+        
+        stage('mvn version') {
+            steps {
+                sh 'mvn -v'
+            }
+        }
+        
+        stage('docker version') {
+            steps {
+                sh 'docker version'
+            }
+        }
+        // this step might fail because of the credentials
+        stage('kubectl version') {
+            steps {
+                sh 'kubectl version --short'
+            }
+        }
+        // create a secret file credentials on jenkins and name it kubeconfig 
+//        stage('kubectl version') {
+//            steps {
+//              withKubeConfig([credentialsId: 'kubeconfig']){
+//                sh 'kubectl version --short'
+//            }
+//            }
+        }
+    }
+}
